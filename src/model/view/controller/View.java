@@ -1,17 +1,21 @@
 package model.view.controller;
 
+import java.util.Timer;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionAdapter;
 
 public class View {
 
     private Controller viewController;
     private JFrame simulationFrame;
     private JPanel simulationPanel;
+
+    volatile private boolean mouseDown = false;
+    volatile private boolean isRunning = false;
+    volatile private Point saveAnchorPoint;
+    private Timer differentiateMousePressedMouseDragged = new Timer();
 
     public void initView(){
         simulationFrame = new JFrame();
@@ -27,20 +31,21 @@ public class View {
         simulationPanel.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                super.mousePressed(e);
-                if (e.getButton() == MouseEvent.BUTTON1) {
-                    System.out.println("left");
+                if (!isRunning) {
+                    saveAnchorPoint = new Point(e.getX(), e.getY());
+                } else {
+                    saveAnchorPoint = null;
                 }
-                if (e.getButton() == MouseEvent.BUTTON3) {
-                    System.out.println("right");
+                if (e.getButton() == MouseEvent.BUTTON1) {
+                    mouseDown = true;
+                    initThread();
                 }
             }
-        });
-        simulationPanel.addMouseMotionListener(new MouseMotionAdapter() {
             @Override
-            public void mouseDragged(MouseEvent e) {
-                super.mouseDragged(e);
-                System.out.println("X: " + e.getX() + "    Y: " + e.getY());
+            public void mouseReleased(MouseEvent e){
+                if (e.getButton() == MouseEvent.BUTTON1) {
+                    mouseDown = false;
+                }
             }
         });
     }
@@ -51,5 +56,27 @@ public class View {
 
     public void tickSimulation(){
 
+    }
+
+
+
+
+    private synchronized boolean checkAndMark() {
+        if (isRunning) return false;
+        isRunning = true;
+        return true;
+    }
+
+    private void initThread() {
+        if (checkAndMark()) {
+            new Thread() {
+                public void run() {
+                    do {
+                        System.out.println(saveAnchorPoint);
+                    } while (mouseDown);
+                    isRunning = false;
+                }
+            }.start();
+        }
     }
 }
