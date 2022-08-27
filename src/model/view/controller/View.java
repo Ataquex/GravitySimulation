@@ -145,6 +145,7 @@ public class View {
                         }
                     } while (mouseDown);
                     isRunning = false;
+                    viewController.addNewForceSubject();
                 }
             }.start();
         }
