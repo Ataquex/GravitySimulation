@@ -127,7 +127,6 @@ public class View {
 
     public void addComponentOnPosition(JLabel component, Vector pos){
         component.setBounds((int) pos.get(0) - (component.getIcon().getIconWidth()/2), (int) pos.get(1) - (component.getIcon().getIconHeight()/2), component.getIcon().getIconWidth(), component.getIcon().getIconHeight());
-        System.out.println(component.getHeight() + "    " + component.getWidth());
         simulationPanel.add(component);
         simulationFrame.repaint();
     }
