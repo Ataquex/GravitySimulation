@@ -12,10 +12,14 @@ public class ForceVector extends JComponent {
     @Override
     public void paintComponent(Graphics g){
         Graphics2D graphic = (Graphics2D) g;
-
         graphic.setColor(Color.decode("0xfafafa"));
         graphic.setStroke(new BasicStroke(2));
-        graphic.drawLine(anchor.x, anchor.y, mouse.x, mouse.y);
+
+        if (rightButton != 3) {
+            graphic.drawLine(anchor.x, anchor.y, mouse.x, mouse.y);
+        } else {
+            graphic.drawLine(-1, -1, -1, -1);
+        }
         if (rightButton == 1) {
             drawForceVector(graphic);
         }

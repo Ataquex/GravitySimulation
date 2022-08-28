@@ -95,9 +95,9 @@ public class View {
                     isDragged = false;
                     differentiateMousePressedMouseDragged.cancel();
                 }
-                saveAnchorPoint.setLocation(-1, -1);
-                currentMousePosition.setLocation(-1, -1);
-                viewController.drawAnchorToMouse(2);
+                //saveAnchorPoint.setLocation(-1, -1);
+                //currentMousePosition.setLocation(-1, -1);
+                viewController.drawAnchorToMouse(3);
             }
         });
         simulationPanel.addMouseMotionListener(new MouseMotionAdapter() {
@@ -163,10 +163,10 @@ public class View {
                             throw new RuntimeException(e);
                         }
                     } while (mouseDown);
-                    isRunning = false;
                     if (mouseButtonID == MouseEvent.BUTTON1) {
                         viewController.addNewForceSubject();
                     }
+                    isRunning = false;
                 }
             }.start();
         }

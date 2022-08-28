@@ -6,6 +6,7 @@ import simulation.objects.ForceSubject;
 import simulation.objects.Repeller;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 
 public class Controller {
@@ -40,7 +41,10 @@ public class Controller {
         ArrayList<Repeller> tempRepellerList = controllerModel.getRepellersList();
         for(int i = 0; i < tempRepellerList.size(); i++){
             controllerView.addComponentOnPosition(tempRepellerList.get(i).getForceLabel(), tempRepellerList.get(i).getForcePos());
-            tempRepellerList.get(i).setpos();
+        }
+        ArrayList<ForceSubject> tempSubjectList = controllerModel.getForceSubjectsList();
+        for(int i = 0; i < tempSubjectList.size(); i++){
+            controllerView.addComponentOnPosition(tempSubjectList.get(i).getSubjectLabel(), tempSubjectList.get(i).getSubjectPosition());
         }
     }
 

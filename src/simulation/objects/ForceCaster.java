@@ -33,8 +33,4 @@ abstract public class ForceCaster {
         this.forceImage = forceImage;
         forceLabel.setIcon(new ImageIcon(forceImage));
     }
-
-    public void setpos() {
-        forcePos.set(0, (int)forcePos.get(0)+1);
-    }
 }
