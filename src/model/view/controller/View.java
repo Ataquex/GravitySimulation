@@ -126,7 +126,7 @@ public class View {
     }
 
     public void addComponentOnPosition(JLabel component, Vector pos){
-        component.setBounds((int) pos.get(0) - (component.getIcon().getIconWidth()/2), (int) pos.get(1) - (component.getIcon().getIconHeight()/2), component.getIcon().getIconWidth(), component.getIcon().getIconHeight());
+        component.setBounds((int) ((float)(pos.get(0)) - (component.getIcon().getIconWidth()/2)), (int) ((float)(pos.get(1)) - (component.getIcon().getIconHeight()/2)), component.getIcon().getIconWidth(), component.getIcon().getIconHeight());
         simulationPanel.add(component);
         simulationFrame.repaint();
     }
@@ -156,7 +156,7 @@ public class View {
             new Thread() {
                 public void run() {
                     do {
-                        viewController.drawAnchorToMouse(mouseButtonID);
+                        viewController.drawAnchorToMouse(1);
                         try{
                             Thread.sleep(10);
                         } catch (InterruptedException e) {

@@ -6,7 +6,7 @@ import java.io.IOException;
 
 public class Repeller extends ForceCaster{
 
-    public Repeller(int xPos, int yPos, float mass){
+    public Repeller(float xPos, float yPos, float mass){
         super(xPos, yPos, mass);
 
         try {

@@ -28,7 +28,7 @@ public class Controller {
         SwingUtilities.invokeLater(new Runnable(){
             public void run() {
                 controllerView.initView(controllerModel.getForceVector());
-                controllerView.setUpTimer(30);
+                controllerView.setUpTimer(15);
             }
         });
     }
@@ -45,6 +45,7 @@ public class Controller {
         ArrayList<ForceSubject> tempSubjectList = controllerModel.getForceSubjectsList();
         for(int i = 0; i < tempSubjectList.size(); i++){
             controllerView.addComponentOnPosition(tempSubjectList.get(i).getSubjectLabel(), tempSubjectList.get(i).getSubjectPosition());
+            tempSubjectList.get(i).calculateForceSubjectDynamics(tempAttractorList, tempRepellerList);
         }
     }
 
@@ -60,7 +61,7 @@ public class Controller {
     }
 
     public void addNewForceSubject(){
-        controllerModel.addForceSubjectToList(new ForceSubject(controllerView.getCurrentMousePosition().x, controllerView.getCurrentMousePosition().y, 50));
+        controllerModel.addForceSubjectToList(new ForceSubject(controllerView.getCurrentMousePosition().x, controllerView.getCurrentMousePosition().y, 50, controllerView.getSaveAnchorPoint().x, controllerView.getSaveAnchorPoint().y));
     }
 
     public void drawAnchorToMouse(int rightButton){

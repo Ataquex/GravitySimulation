@@ -11,7 +11,7 @@ abstract public class ForceCaster {
     private BufferedImage forceImage;
     private JLabel forceLabel = new JLabel();
 
-    public ForceCaster(int xPos, int yPos, float mass){
+    public ForceCaster(float xPos, float yPos, float mass){
         forceMass = mass;
         forcePos.add(xPos);
         forcePos.add(yPos);
