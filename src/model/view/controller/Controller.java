@@ -6,7 +6,6 @@ import simulation.objects.ForceSubject;
 import simulation.objects.Repeller;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class Controller {
 
@@ -53,9 +52,10 @@ public class Controller {
         System.out.println("new ForceSubject");
     }
 
-    public void decideCase(boolean button){
+    public void drawAnchorToMouse(boolean rightButton){
         mouseAnchor.setAnchor(controllerView.getSaveAnchorPoint());
         mouseAnchor.setMouse(controllerView.getCurrentMousePosition());
+        mouseAnchor.setRightButton(rightButton);
         mouseAnchor.paintLine();
     }
 }

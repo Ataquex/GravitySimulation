@@ -64,10 +64,10 @@ public class View {
 
                 if (e.getButton() == MouseEvent.BUTTON1) {
                     mouseDown = true;
-                    isRightButtonPressed = true;
+                    isRightButtonPressed = false;
                 } else if (e.getButton() == MouseEvent.BUTTON3) {
                     mouseDown = true;
-                    isRightButtonPressed = false;
+                    isRightButtonPressed = true;
                 }
             }
             @Override
@@ -91,7 +91,7 @@ public class View {
                 }
                 saveAnchorPoint.setLocation(-1, -1);
                 currentMousePosition.setLocation(-1, -1);
-                viewController.decideCase(isRightButtonPressed);
+                viewController.drawAnchorToMouse(false);
             }
         });
         simulationPanel.addMouseMotionListener(new MouseMotionAdapter() {
@@ -137,7 +137,7 @@ public class View {
             new Thread() {
                 public void run() {
                     do {
-                        viewController.decideCase(isRightButtonPressed);
+                        viewController.drawAnchorToMouse(isRightButtonPressed);
                         try{
                             Thread.sleep(10);
                         } catch (InterruptedException e) {
@@ -145,7 +145,9 @@ public class View {
                         }
                     } while (mouseDown);
                     isRunning = false;
-                    viewController.addNewForceSubject();
+                    if (!isRightButtonPressed) {
+                        viewController.addNewForceSubject();
+                    }
                 }
             }.start();
         }

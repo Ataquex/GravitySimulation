@@ -8,6 +8,7 @@ public class ConnectVector extends JComponent {
 
     private Point anchor = new Point(-1, -1);
     private Point mouse = new Point(-1, -1);
+    private boolean rightButton = false;
 
     @Override
     public void paintComponent(Graphics g){
@@ -16,6 +17,9 @@ public class ConnectVector extends JComponent {
         graphic.setColor(Color.decode("0xfafafa"));
         graphic.setStroke(new BasicStroke(2));
         graphic.drawLine(anchor.x, anchor.y, mouse.x, mouse.y);
+        if (rightButton) {
+            System.out.println(rightButton);
+        }
     }
 
     public void paintLine(){
@@ -31,5 +35,9 @@ public class ConnectVector extends JComponent {
 
     public void setMouse(Point mouse){
         this.mouse = mouse;
+    }
+
+    public void setRightButton(boolean rightButton){
+        this.rightButton = rightButton;
     }
 }
