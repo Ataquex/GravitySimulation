@@ -27,7 +27,7 @@ public class Controller {
         SwingUtilities.invokeLater(new Runnable(){
             public void run() {
                 controllerView.initView(controllerModel.getForceVector());
-                controllerView.setUpTimer(100);
+                controllerView.setUpTimer(30);
             }
         });
     }
@@ -40,6 +40,7 @@ public class Controller {
         ArrayList<Repeller> tempRepellerList = controllerModel.getRepellersList();
         for(int i = 0; i < tempRepellerList.size(); i++){
             controllerView.addComponentOnPosition(tempRepellerList.get(i).getForceLabel(), tempRepellerList.get(i).getForcePos());
+            tempRepellerList.get(i).setpos();
         }
     }
 
