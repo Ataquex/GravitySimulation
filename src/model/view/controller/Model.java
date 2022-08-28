@@ -1,8 +1,8 @@
 package model.view.controller;
 
 import simulation.objects.Attractor;
-import simulation.objects.ForcePath;
 import simulation.objects.ForceSubject;
+import simulation.objects.ForceVector;
 import simulation.objects.Repeller;
 
 import java.util.ArrayList;
@@ -13,7 +13,7 @@ public class Model {
     private ArrayList<Attractor> simulationObjectsAttractors = new ArrayList<Attractor>();
     private ArrayList<Repeller> simulationObjectsRepellers = new ArrayList<Repeller>();
     private ArrayList<ForceSubject> simulationObjectsForceSubjects = new ArrayList<ForceSubject>();
-    private ForcePath simulationObjectsForcePath;
+    private ForceVector simulationObjectsForceVector;
 
 
 
@@ -30,8 +30,8 @@ public class Model {
         simulationObjectsForceSubjects.add(forceSubject);
     }
 
-    public void setForcePath(ForcePath forcePath){
-        simulationObjectsForcePath = forcePath;
+    public void setForceVector(ForceVector forceVector){
+        simulationObjectsForceVector = forceVector;
     }
 
 
@@ -53,7 +53,7 @@ public class Model {
         return simulationObjectsForceSubjects;
     }
 
-    public ForcePath getForcePathList() {
-        return simulationObjectsForcePath;
+    public ForceVector getForceVector() {
+        return simulationObjectsForceVector;
     }
 }

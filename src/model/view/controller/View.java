@@ -1,12 +1,13 @@
 package model.view.controller;
 
-import simulation.objects.ConnectVector;
+import simulation.objects.ForceVector;
 
 import java.awt.event.*;
 import java.util.Timer;
 import javax.swing.*;
 import java.awt.*;
 import java.util.TimerTask;
+import java.util.Vector;
 
 public class View {
 
@@ -17,14 +18,15 @@ public class View {
     volatile private boolean mouseDown = false;
     volatile private boolean isRunning = false;
     volatile private boolean isDragged = false;
-    volatile private boolean isRightButtonPressed;
+    volatile private int mouseButtonID;
     volatile private Point currentMousePosition = new Point();
     volatile private Point saveAnchorPoint = new Point();
 
     private Timer differentiateMousePressedMouseDragged;
     private TimerTask isMouseHolding;
+    private javax.swing.Timer tickTimer;
 
-    public void initView(ConnectVector lineComponent){
+    public void initView(ForceVector pathComponent){
 
         simulationFrame = new JFrame();
         simulationPanel = new JPanel(null);
@@ -35,19 +37,23 @@ public class View {
         simulationFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         simulationFrame.setMinimumSize(new Dimension(1200, 800));
 
-        lineComponent.setBounds(0, 0, simulationFrame.getWidth(), simulationFrame.getHeight());
-        simulationPanel.add(lineComponent);
+        pathComponent.setBounds(0, 0, simulationFrame.getWidth(), simulationFrame.getHeight());
+        simulationPanel.add(pathComponent);
 
         simulationFrame.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
-                lineComponent.setBounds(0, 0, simulationFrame.getWidth(), simulationFrame.getHeight());
+                pathComponent.setBounds(0, 0, simulationFrame.getWidth(), simulationFrame.getHeight());
             }
         });
 
         simulationPanel.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
+                currentMousePosition.setLocation(e.getX(), e.getY());
+
+                if (e.getButton() == MouseEvent.BUTTON2) return;
+
                 differentiateMousePressedMouseDragged = new Timer();
                 isMouseHolding = new TimerTask(){
                     @Override
@@ -56,22 +62,22 @@ public class View {
                         initThread();
                     }
                 };
-
                 differentiateMousePressedMouseDragged.schedule(isMouseHolding, 110);
+
                 if (!isRunning) {
                     saveAnchorPoint.setLocation(e.getX(), e.getY());
                 }
 
-                if (e.getButton() == MouseEvent.BUTTON1) {
+                if (e.getButton() == MouseEvent.BUTTON1 || e.getButton() == MouseEvent.BUTTON3) {
                     mouseDown = true;
-                    isRightButtonPressed = false;
-                } else if (e.getButton() == MouseEvent.BUTTON3) {
-                    mouseDown = true;
-                    isRightButtonPressed = true;
+                    mouseButtonID = e.getButton();
                 }
             }
             @Override
             public void mouseReleased(MouseEvent e){
+
+                if (e.getButton() == MouseEvent.BUTTON2) return;
+
                 if (e.getButton() == MouseEvent.BUTTON1) {
                     if (!isDragged) {
                         currentMousePosition = new Point(e.getX(), e.getY());
@@ -91,7 +97,7 @@ public class View {
                 }
                 saveAnchorPoint.setLocation(-1, -1);
                 currentMousePosition.setLocation(-1, -1);
-                viewController.drawAnchorToMouse(false);
+                viewController.drawAnchorToMouse(2);
             }
         });
         simulationPanel.addMouseMotionListener(new MouseMotionAdapter() {
@@ -108,8 +114,22 @@ public class View {
         viewController = controller;
     }
 
-    public void tickSimulation(){
+    public void setUpTimer(int delay){
+        tickTimer = new javax.swing.Timer(delay, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                viewController.tickSimulation();
+            }
+        });
+        tickTimer.setRepeats(true);
+        tickTimer.start();
+    }
 
+    public void addComponentOnPosition(JLabel component, Vector pos){
+        component.setBounds((int) pos.get(0) - (component.getIcon().getIconWidth()/2), (int) pos.get(1) - (component.getIcon().getIconHeight()/2), component.getIcon().getIconWidth(), component.getIcon().getIconHeight());
+        System.out.println(component.getHeight() + "    " + component.getWidth());
+        simulationPanel.add(component);
+        simulationFrame.repaint();
     }
 
 
@@ -137,7 +157,7 @@ public class View {
             new Thread() {
                 public void run() {
                     do {
-                        viewController.drawAnchorToMouse(isRightButtonPressed);
+                        viewController.drawAnchorToMouse(mouseButtonID);
                         try{
                             Thread.sleep(10);
                         } catch (InterruptedException e) {
@@ -145,7 +165,7 @@ public class View {
                         }
                     } while (mouseDown);
                     isRunning = false;
-                    if (!isRightButtonPressed) {
+                    if (mouseButtonID == MouseEvent.BUTTON1) {
                         viewController.addNewForceSubject();
                     }
                 }

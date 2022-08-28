@@ -2,13 +2,12 @@ package simulation.objects;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 
-public class ConnectVector extends JComponent {
+public class ForceVector extends JComponent {
 
     private Point anchor = new Point(-1, -1);
     private Point mouse = new Point(-1, -1);
-    private boolean rightButton = false;
+    private int rightButton = 2;
 
     @Override
     public void paintComponent(Graphics g){
@@ -17,9 +16,13 @@ public class ConnectVector extends JComponent {
         graphic.setColor(Color.decode("0xfafafa"));
         graphic.setStroke(new BasicStroke(2));
         graphic.drawLine(anchor.x, anchor.y, mouse.x, mouse.y);
-        if (rightButton) {
-            System.out.println(rightButton);
+        if (rightButton == 1) {
+            drawForceVector(graphic);
         }
+    }
+
+    private void drawForceVector(Graphics2D graphics){
+        //drawForceVector(graphics);
     }
 
     public void paintLine(){
@@ -37,7 +40,7 @@ public class ConnectVector extends JComponent {
         this.mouse = mouse;
     }
 
-    public void setRightButton(boolean rightButton){
+    public void setRightButton(int rightButton){
         this.rightButton = rightButton;
     }
 }

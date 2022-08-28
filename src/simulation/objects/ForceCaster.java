@@ -9,7 +9,7 @@ abstract public class ForceCaster {
     private float forceMass;
     private Vector forcePos = new Vector<>();
     private BufferedImage forceImage;
-    private JLabel forceLabel;
+    private JLabel forceLabel = new JLabel();
 
     public ForceCaster(int xPos, int yPos, float mass){
         forceMass = mass;
@@ -31,5 +31,6 @@ abstract public class ForceCaster {
 
     public void setForceImage(BufferedImage forceImage) {
         this.forceImage = forceImage;
+        forceLabel.setIcon(new ImageIcon(forceImage));
     }
 }
