@@ -38,6 +38,12 @@ public class Model {
         simulationObjectsForceVector = forceVector;
     }
 
+    public void resetObjects(){
+        simulationObjectsAttractors.clear();
+        simulationObjectsRepellers.clear();
+        simulationObjectsForceSubjects.clear();
+    }
+
 
 
 

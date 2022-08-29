@@ -77,7 +77,6 @@ public class ForceVector extends JComponent {
             subjectVelocity.set(1, (float) subjectVelocity.get(1) + forceVector.get(1) * force);
         }
         graphics.drawLine((int)((float)subjectPosition.get(0)), (int)((float)subjectPosition.get(1)), (int)((float)subjectPosition.get(0) + (float)subjectVelocity.get(0)), (int)((float)subjectPosition.get(1) + (float)subjectVelocity.get(1)));
-        System.out.println("Position: " + subjectPosition + "      Velocity: " + subjectVelocity);
 
         subjectPosition.set(0, (float)subjectPosition.get(0) + (float)subjectVelocity.get(0));
         subjectPosition.set(1, (float)subjectPosition.get(1) + (float)subjectVelocity.get(1));

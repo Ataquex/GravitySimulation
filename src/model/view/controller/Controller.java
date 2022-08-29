@@ -6,18 +6,19 @@ import simulation.objects.ForceSubject;
 import simulation.objects.Repeller;
 
 import javax.swing.*;
-import java.awt.*;
 import java.util.ArrayList;
 
 public class Controller {
 
     private View controllerView;
     private Model controllerModel;
+    private KeyListenerReset keyReset = new KeyListenerReset();
 
     public Controller(View view, Model model){
         controllerView = view;
         controllerModel = model;
         model.setForceVector(new ForceVector());
+        keyReset.setListenerController(this);
 
         this.initSimulation();
     }
@@ -27,7 +28,7 @@ public class Controller {
 
         SwingUtilities.invokeLater(new Runnable(){
             public void run() {
-                controllerView.initView(controllerModel.getForceVector());
+                controllerView.initView(controllerModel.getForceVector(), keyReset);
                 controllerView.setUpTimer(15);
             }
         });
@@ -62,6 +63,11 @@ public class Controller {
 
     public void addNewForceSubject(){
         controllerModel.addForceSubjectToList(new ForceSubject(controllerView.getCurrentMousePosition().x, controllerView.getCurrentMousePosition().y, controllerModel.getSubjectMass(), controllerView.getSaveAnchorPoint().x, controllerView.getSaveAnchorPoint().y));
+    }
+
+    public void resetObjects(){
+        controllerModel.resetObjects();
+        controllerView.resetView(controllerModel.getForceVector());
     }
 
     public void drawAnchorToMouse(int rightButton){

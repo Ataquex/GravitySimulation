@@ -26,8 +26,7 @@ public class View {
     private TimerTask isMouseHolding;
     private javax.swing.Timer tickTimer;
 
-    public void initView(ForceVector pathComponent){
-
+    public void initView(ForceVector pathComponent, KeyListenerReset keyReset){
         simulationFrame = new JFrame();
         simulationPanel = new JPanel(null);
 
@@ -46,6 +45,8 @@ public class View {
                 pathComponent.setBounds(0, 0, simulationFrame.getWidth(), simulationFrame.getHeight());
             }
         });
+
+        simulationFrame.addKeyListener(keyReset);
 
         simulationPanel.addMouseListener(new MouseAdapter() {
             @Override
@@ -127,6 +128,14 @@ public class View {
         component.setBounds((int) ((float)(pos.get(0)) - (component.getIcon().getIconWidth()/2)), (int) ((float)(pos.get(1)) - (component.getIcon().getIconHeight()/2)), component.getIcon().getIconWidth(), component.getIcon().getIconHeight());
         simulationPanel.add(component);
         simulationFrame.repaint();
+    }
+
+    public void resetView(ForceVector pathComponent){
+        simulationPanel.removeAll();
+        pathComponent.setBounds(0, 0, simulationFrame.getWidth(), simulationFrame.getHeight());
+        simulationPanel.add(pathComponent);
+        simulationFrame.repaint();
+
     }
 
 
