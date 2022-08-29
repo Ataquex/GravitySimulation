@@ -8,12 +8,16 @@ import simulation.objects.Repeller;
 import java.util.ArrayList;
 
 public class Model {
-    private final float GRAVITATIONAL_CONSTANT = 10;
+    private final float GRAVITATIONAL_CONSTANT = 6.6743f;
 
-    private ArrayList<Attractor> simulationObjectsAttractors = new ArrayList<Attractor>();
-    private ArrayList<Repeller> simulationObjectsRepellers = new ArrayList<Repeller>();
-    private ArrayList<ForceSubject> simulationObjectsForceSubjects = new ArrayList<ForceSubject>();
+    private final ArrayList<Attractor> simulationObjectsAttractors = new ArrayList<Attractor>();
+    private final ArrayList<Repeller> simulationObjectsRepellers = new ArrayList<Repeller>();
+    private final ArrayList<ForceSubject> simulationObjectsForceSubjects = new ArrayList<ForceSubject>();
     private ForceVector simulationObjectsForceVector;
+
+    private final float attractorMass = 0.5f;
+    private final float repellerMass = -0.5f;
+    private final float subjectMass = 0.5f;
 
 
 
@@ -55,5 +59,17 @@ public class Model {
 
     public ForceVector getForceVector() {
         return simulationObjectsForceVector;
+    }
+
+    public float getAttractorMass() {
+        return attractorMass;
+    }
+
+    public float getRepellerMass() {
+        return repellerMass;
+    }
+
+    public float getSubjectMass() {
+        return subjectMass;
     }
 }
