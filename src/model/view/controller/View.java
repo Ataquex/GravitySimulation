@@ -50,6 +50,7 @@ public class View {
         simulationPanel.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
+                mouseButtonID = e.getButton();
                 currentMousePosition.setLocation(e.getX(), e.getY());
 
                 if (e.getButton() == MouseEvent.BUTTON2) return;
@@ -70,7 +71,6 @@ public class View {
 
                 if (e.getButton() == MouseEvent.BUTTON1 || e.getButton() == MouseEvent.BUTTON3) {
                     mouseDown = true;
-                    mouseButtonID = e.getButton();
                 }
             }
             @Override
@@ -95,9 +95,7 @@ public class View {
                     isDragged = false;
                     differentiateMousePressedMouseDragged.cancel();
                 }
-                //saveAnchorPoint.setLocation(-1, -1);
-                //currentMousePosition.setLocation(-1, -1);
-                viewController.drawAnchorToMouse(3);
+                viewController.drawAnchorToMouse(2);
             }
         });
         simulationPanel.addMouseMotionListener(new MouseMotionAdapter() {
@@ -156,7 +154,7 @@ public class View {
             new Thread() {
                 public void run() {
                     do {
-                        viewController.drawAnchorToMouse(1);
+                        viewController.drawAnchorToMouse(mouseButtonID);
                         try{
                             Thread.sleep(10);
                         } catch (InterruptedException e) {

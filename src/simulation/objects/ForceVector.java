@@ -19,25 +19,33 @@ public class ForceVector extends JComponent {
     private int rightButton = 2;
     private float mass;
 
+    public ForceVector(){
+        subjectPosition.add(0.0f);
+        subjectPosition.add(0.0f);
+        subjectVelocity.add(0.0f);
+        subjectVelocity.add(0.0f);
+    }
+
     @Override
     public void paintComponent(Graphics g){
         Graphics2D graphic = (Graphics2D) g;
         graphic.setColor(Color.decode("0xfafafa"));
         graphic.setStroke(new BasicStroke(2));
 
-        if (rightButton != 3) {
+        if (rightButton != 2) {
             graphic.drawLine(anchor.x, anchor.y, mouse.x, mouse.y);
         } else {
             graphic.drawLine(-1, -1, -1, -1);
         }
-        if (rightButton == 1) {
-            subjectVelocity.add((float)((anchor.x - mouse.x) / 30));
-            subjectVelocity.add((float)((anchor.y - mouse.y) / 30));
 
-            subjectPosition.add((float)mouse.x);
-            subjectPosition.add((float)anchor.y);
+        if (rightButton == 3) {
+            subjectVelocity.set(0, ((anchor.x - mouse.x) / 30f));
+            subjectVelocity.set(1, ((anchor.y - mouse.y) / 30f));
 
-            drawForceVector(graphic, 100);
+            subjectPosition.set(0, (float)mouse.x);
+            subjectPosition.set(1, (float)mouse.y);
+
+            drawForceVector(graphic, 1000);
         }
     }
 
@@ -68,12 +76,13 @@ public class ForceVector extends JComponent {
             subjectVelocity.set(0, (float) subjectVelocity.get(0) + forceVector.get(0) * force);
             subjectVelocity.set(1, (float) subjectVelocity.get(1) + forceVector.get(1) * force);
         }
-        //graphics.drawLine((int)(float)subjectPosition.get(0), (int)(float)subjectPosition.get(1), (int)((float)subjectPosition.get(0) + (float)subjectVelocity.get(0)), (int)((float)subjectPosition.get(1) + (float)subjectVelocity.get(1)));
+        graphics.drawLine((int)((float)subjectPosition.get(0)), (int)((float)subjectPosition.get(1)), (int)((float)subjectPosition.get(0) + (float)subjectVelocity.get(0)), (int)((float)subjectPosition.get(1) + (float)subjectVelocity.get(1)));
+        System.out.println("Position: " + subjectPosition + "      Velocity: " + subjectVelocity);
 
         subjectPosition.set(0, (float)subjectPosition.get(0) + (float)subjectVelocity.get(0));
         subjectPosition.set(1, (float)subjectPosition.get(1) + (float)subjectVelocity.get(1));
 
-        if (row > 10) {
+        if (row > 0) {
             drawForceVector(graphics, row);
         }
     }
