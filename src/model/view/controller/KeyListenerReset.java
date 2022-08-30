@@ -20,6 +20,9 @@ public class KeyListenerReset implements java.awt.event.KeyListener {
         if (e.getKeyCode() == KeyEvent.VK_SPACE) {
             listenerController.resetObjects();
         }
+        if (e.getKeyCode() == KeyEvent.VK_S){
+            listenerController.addNewForceSubject();
+        }
     }
 
 
