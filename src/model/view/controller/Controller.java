@@ -62,6 +62,7 @@ public class Controller {
     }
 
     public void addNewForceSubject(){
+        System.out.println("new ForceSubject at: " + controllerView.getCurrentMousePosition() + "        from anchor: " + controllerView.getSaveAnchorPoint());
         controllerModel.addForceSubjectToList(new ForceSubject(controllerView.getCurrentMousePosition().x, controllerView.getCurrentMousePosition().y, controllerModel.getSubjectMass(), controllerView.getSaveAnchorPoint().x, controllerView.getSaveAnchorPoint().y));
     }
 

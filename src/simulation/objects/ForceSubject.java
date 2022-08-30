@@ -60,8 +60,10 @@ public class ForceSubject {
             radius = (float) (Math.sqrt((forceVector.get(0) * forceVector.get(0)) + (forceVector.get(1) * forceVector.get(1))));
             force = (G_CONSTANT * subjectMass * attractor.getForceMass()) / (radius * radius);
 
-            subjectVelocity.set(0, (float) subjectVelocity.get(0) + forceVector.get(0) * force);
-            subjectVelocity.set(1, (float) subjectVelocity.get(1) + forceVector.get(1) * force);
+            if (radius != 0) {
+                subjectVelocity.set(0, (float) subjectVelocity.get(0) + forceVector.get(0) * force);
+                subjectVelocity.set(1, (float) subjectVelocity.get(1) + forceVector.get(1) * force);
+            }
         }
 
         for (Repeller repeller : repellerList) {
@@ -70,8 +72,10 @@ public class ForceSubject {
             radius = (float) (Math.sqrt(forceVector.get(0) * forceVector.get(0) + (forceVector.get(1) * forceVector.get(1))));
             force = (G_CONSTANT * subjectMass * repeller.getForceMass()) / (radius * radius);
 
-            subjectVelocity.set(0, (float) subjectVelocity.get(0) + forceVector.get(0) * force);
-            subjectVelocity.set(1, (float) subjectVelocity.get(1) + forceVector.get(1) * force);
+            if (radius != 0) {
+                subjectVelocity.set(0, (float) subjectVelocity.get(0) + forceVector.get(0) * force);
+                subjectVelocity.set(1, (float) subjectVelocity.get(1) + forceVector.get(1) * force);
+            }
         }
 
         subjectPosition.set(0, (float)subjectPosition.get(0) + (float)subjectVelocity.get(0));
