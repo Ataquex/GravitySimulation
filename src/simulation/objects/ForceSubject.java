@@ -5,6 +5,7 @@ import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Vector;
 
@@ -27,8 +28,10 @@ public class ForceSubject {
 
 
         try {
-            subjectImage = (ImageIO.read(new File("src/caster/images/subject.png")));
+            subjectImage = (ImageIO.read(new File(getClass().getResource("/caster/images/subject.png").toURI())));
         } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (URISyntaxException e) {
             throw new RuntimeException(e);
         }
 
